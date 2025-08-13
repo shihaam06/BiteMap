@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteMap - Your Guide to Every Bite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #F5F1E8 0%, #FFF8F0 100%);
+            min-height: 100vh;
+            color: #8B2F1F;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(139, 47, 31, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(229, 90, 43, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #E55A2B, #8B2F1F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #8B2F1F;
+            margin-left: 10px;
+            opacity: 0.8;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(229, 90, 43, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(229, 90, 43, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #8B2F1F;
+            border: 2px solid #8B2F1F;
+        }
+
+        .btn-secondary:hover {
+            background: #8B2F1F;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 248, 240, 0.6);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 20px;
+            border: 1px solid rgba(229, 90, 43, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #8B2F1F;
+            text-shadow: 0 4px 8px rgba(139, 47, 31, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #8B2F1F;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(139, 47, 31, 0.1);
+            border: 1px solid rgba(229, 90, 43, 0.1);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #8B2F1F;
+        }
+
+        .form-group input, .form-group select {
+            padding: 1rem;
+            border: 2px solid #F5F1E8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #E55A2B;
+            box-shadow: 0 0 0 3px rgba(229, 90, 43, 0.1);
+        }
+
+        /* Results Section */
+        .results-section {
+            margin: 2rem 0;
+        }
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(139, 47, 31, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(229, 90, 43, 0.1);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(139, 47, 31, 0.15);
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .restaurant-info {
+            padding: 1.5rem;
+        }
+
+        .restaurant-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #8B2F1F;
+        }
+
+        .restaurant-details {
+            color: #8B2F1F;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .best-dish {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(139, 47, 31, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(139, 47, 31, 0.3);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #8B2F1F;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .points-display {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Vendor Dashboard */
+        .vendor-dashboard {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(139, 47, 31, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .restaurant-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div style="display: flex; align-items: center;">
+                <div class="logo">BiteMap</div>
+                <div class="tagline">"Your guide to every bite"</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="showStudentView()">Student</button>
+                <button class="btn btn-primary" onclick="showLoginModal()">Login</button>
+                <button class="btn btn-" onclick="showVendorView()">Vendor</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Find Perfect Food Within Budget</h1>
+            <p>Discover affordable, tasty food near your college based on real student reviews</p>
+            <button class="btn btn-primary" onclick="scrollToSearch()">Start Exploring</button>
+        </section>
+
+        <!-- Student View -->
+        <div id="student-view">
+            <!-- Search Section -->
+            <section class="search-section" id="search-section">
+                <h2 style="margin-bottom: 1rem; color: #8B2F1F;">Find Your Perfect Meal</h2>
+                <form class="search-form" id="search-form">
+                    <div class="form-group">
+                        <label for="college">College Location</label>
+                        <select id="college" name="college">
+                            <option value="">Select your college</option>
+                            <option value="msrit">MSRIT</option>
+                            <option value="iisc">IISc Bangalore</option>
+                            <option value="nit">NIT Karnataka</option>
+                            <option value="rvce">RVCE</option>
+                            <option value="pes">PES University</option>
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Budget Range (₹)</label>
+                        <select id="budget" name="budget">
+                            <option value="">Select budget</option>
+                            <option value="0-50">₹0 - ₹50</option>
+                            <option value="50-100">₹50 - ₹100</option>
+                            <option value="100-200">₹100 - ₹200</option>
+                            <option value="200-300">₹200 - ₹300</option>
+                            <option value="300+">₹300+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="craving">What are you craving?</label>
+                        <select id="craving" name="craving">
+                            <option value="">Select cuisine</option>
+                            <option value="indian">Indian</option>
+                            <option value="chinese">Chinese</option>
+                            <option value="italian">Italian</option>
+                            <option value="fast-food">Fast Food</option>
+                            <option value="south-indian">South Indian</option>
+                            <option value="north-indian">North Indian</option>
+                            <option value="indian-snacks">Indian Snacks</option>
+                            <option value="deserts">Deserts</option>
+                            <option value="biryani">Biryani</option>
+                            
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: end;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Find Restaurants</button>
+                    </div>
+                </form>
+
+                <!-- Points Display -->
+                <div class="points-display">
+                    <h3>Your Reward Points: <span id="user-points">150</span></h3>
+                    <p>250 points needed for next voucher!</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section">
+                <div class="restaurant-grid" id="restaurant-grid">
+                    <!-- Results will be populated here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Vendor Dashboard -->
+        <div id="vendor-view" class="hidden">
+            <section class="vendor-dashboard">
+                <h2 style="margin-bottom: 2rem; color: #8B2F1F;">Vendor Analytics Dashboard</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Customers This Month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">New Customers (Last 15 Days)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.6</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">89%</div>
+                        <div class="stat-label">Customer Return Rate</div>
+                    </div>
+                </div>
+
+                <div style="background: #FFF8F0; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 1px solid rgba(229, 90, 43, 0.2);">
+                    <h3 style="margin-bottom: 1rem; color: #8B2F1F;">Revenue Impact Report</h3>
+                    <p style="color: #8B2F1F; opacity: 0.8; line-height: 1.6;">In the last 15 days, <strong>45 new customers</strong> visited your restaurant after discovering it through BiteMap. Based on average order value of ₹180, this generated approximately <strong>₹8,100 in additional revenue</strong>.</p>
+                    <p style="color: #8B2F1F; opacity: 0.8; line-height: 1.6; margin-top: 1rem;"><strong>Commission Rate:</strong> 8% on BiteMap-referred customers</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">Continue Partnership</button>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: #8B2F1F;">Recent Customer Reviews</h3>
+                    <div style="background: white; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #4ecdc4;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600;">Anonymous Student</span>
+                            <span style="color: #ffd700;">★★★★☆</span>
+                        </div>
+                        <p style="color: #666; margin-top: 0.5rem;">"Great biryani within budget! Perfect for college students."</p>
+                        <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Best Dish: Chicken Biryani | Price Range: ₹120-150</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReviewModal()">&times;</span>
+            <h2 style="margin-bottom: 1rem; color: #333;">Rate Your Experience</h2>
+            <p style="color: #666; margin-bottom: 1rem;">Help fellow students by sharing your honest review!</p>
+            
+            <form class="review-form" id="review-form">
+                <div class="form-group">
+                      <label for="datetime">The date and time you visited</label>
+                      <input type="date" required> <br>
+                      <input type="time" required> 
+                      <label for="Price">Total Bill(in rupees):</label>
+                      <input type="number" required>
+                    
+                    
+                    <label>Overall Rating</label>
+                    <div class="rating-stars" id="rating-stars">
+                        <span onclick="setRating(1)">☆</span>
+                        <span onclick="setRating(2)">☆</span>
+                        <span onclick="setRating(3)">☆</span>
+                        <span onclick="setRating(4)">☆</span>
+                        <span onclick="setRating(5)">☆</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price-range">Price Range Of The Items</label>
+                    <select id="price-range">
+                        <option value="50-100">₹50 - ₹100</option>
+                        <option value="100-200">₹100 - ₹200</option>
+                        <option value="200-300">₹200 - ₹300</option>
+                        <option value="300+">₹300+</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="best-dish">Best Dish You Tried</label>
+                    <input type="text" id="best-dish" placeholder="e.g., Chicken Biryani">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit Review (+20 Points)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+                            <h2 style="margin-bottom: 1rem; color: #8B2F1F;">Login to BiteMap</h2>
+            
+            <form class="review-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your.email@college.edu">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p style="text-align: center; margin-top: 1rem; color: #8B2F1F; opacity: 0.8;">
+                    New user? <a href="#" style="color: #E55A2B;">Sign up for free</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 BiteMap. Connecting students with great food experiences.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Made for students, by students 🍕</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample restaurant data
+        const restaurants = [
+            {
+                id: 1,
+                name: "Spicy Junction",
+                cuisine: "indian",
+                budget: "50-100",
+                rating: 4.5,
+                reviews: 127,
+                location: "Near VIT Main Gate",
+                bestDish: "Chicken Biryani",
+                college: "vit",
+                distance: "0.2 km"
+            },
+            {
+                id: 2,
+                name: "Pasta Paradise",
+                cuisine: "italian",
+                budget: "100-200",
+                rating: 4.2,
+                reviews: 89,
+                location: "IISc Campus Road",
+                bestDish: "Margherita Pizza",
+                college: "iisc",
+                distance: "0.5 km"
+            },
+            {
+                id: 3,
+                name: "Dosa Delight",
+                cuisine: "south-indian",
+                budget: "50-100",
+                rating: 4.7,
+                reviews: 203,
+                location: "RVCE Food Court",
+                bestDish: "Masala Dosa",
+                college: "rvce",
+                distance: "0.1 km"
+            },
+            {
+                id: 4,
+                name: "Burger Buzz",
+                cuisine: "fast-food",
+                budget: "100-200",
+                rating: 4.0,
+                reviews: 156,
+                location: "PES University Gate",
+                bestDish: "Chicken Burger",
+                college: "pes",
+                distance: "0.3 km"
+            },
+            {
+                id: 5,
+                name: "Noodle House",
+                cuisine: "chinese",
+                budget: "100-200",
+                rating: 4.3,
+                reviews: 98,
+                location: "NIT Main Road",
+                bestDish: "Hakka Noodles",
+                college: "nit",
+                distance: "0.4 km"
+            }
+        ];
+
+        let currentRating = 0;
+        let userPoints = 150;
+
+        // View switching functions
+        function showStudentView() {
+            document.getElementById('student-view').classList.remove('hidden');
+            document.getElementById('vendor-view').classList.add('hidden');
+        }
+
+        function showVendorView() {
+            document.getElementById('student-view').classList.add('hidden');
+            document.getElementById('vendor-view').classList.remove('hidden');
+        }
+
+        function scrollToSearch() {
+            document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Search functionality
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const college = document.getElementById('college').value;
+            const budget = document.getElementById('budget').value;
+            const craving = document.getElementById('craving').value;
+            
+            if (!college) {
+                alert('Please select your college location');
+                return;
+            }
+            
+            const filteredRestaurants = restaurants.filter(restaurant => {
+                let matches = true;
+                
+                if (college && restaurant.college !== college) {
+                    matches = false;
+                }
+                
+                if (budget && restaurant.budget !== budget) {
+                    matches = false;
+                }
+                
+                if (craving && restaurant.cuisine !== craving) {
+                    matches = false;
+                }
+                
+                return matches;
+            });
+            
+            displayResults(filteredRestaurants);
+        });
+
+        function displayResults(restaurants) {
+            const grid = document.getElementById('restaurant-grid');
+            
+            if (restaurants.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #666;">
+                        <h3>No restaurants found matching your criteria</h3>
+                        <p>Try adjusting your filters or exploring different options</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = restaurants.map(restaurant => `
+                <div class="restaurant-card">
+                    <div class="restaurant-image">🍽️</div>
+                    <div class="restaurant-info">
+                        <div class="restaurant-name">${restaurant.name}</div>
+                        <div class="restaurant-details">
+                            📍 ${restaurant.location} • ${restaurant.distance}
+                        </div>
+                        <div class="rating">
+                            <span class="stars">${'★'.repeat(Math.floor(restaurant.rating))}${'☆'.repeat(5-Math.floor(restaurant.rating))}</span>
+                            <span>${restaurant.rating} (${restaurant.reviews} reviews)</span>
+                        </div>
+                        <div class="best-dish">Best: ${restaurant.bestDish}</div>
+                        <button class="btn btn-primary" onclick="visitRestaurant(${restaurant.id})">
+                            Visit & Review
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function visitRestaurant(restaurantId) {
+            const restaurant = restaurants.find(r => r.id === restaurantId);
+            alert(`Great choice! Head to ${restaurant.name} and scan the QR code there to leave a review and earn points!`);
+            
+            // Simulate visiting the restaurant
+            setTimeout(() => {
+                showReviewModal(restaurant);
+            }, 1000);
+        }
+
+        function showReviewModal(restaurant) {
+            document.getElementById('review-modal').style.display = 'block';
+            currentRestaurant = restaurant;
+        }
+
+        function closeReviewModal() {
+            document.getElementById('review-modal').style.display = 'none';
+        }
+
+        function showLoginModal() {
+            document.getElementById('login-modal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // Rating functionality
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('#rating-stars span');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.innerHTML = '★';
+                    star.style.color = '#ffd700';
+                } else {
+                    star.innerHTML = '☆';
+                    star.style.color = '#ccc';
+                }
+            });
+        }
+
+        // Review form submission
+        document.getElementById('review-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Please provide a rating');
+                return;
+            }
+            
+            const priceRange = document.getElementById('price-range').value;
+            const bestDish = document.getElementById('best-dish').value;
+            
+            if (!bestDish) {
+                alert('Please mention the best dish you tried');
+                return;
+            }
+            
+            // Add points
+            userPoints += 20;
+            document.getElementById('user-points').textContent = userPoints;
+            
+            alert('Review submitted successfully! You earned 20 points! 🎉');
+            closeReviewModal();
+            
+            // Reset form
+            currentRating = 0;
+            setRating(0);
+            document.getElementById('price-range').selectedIndex = 0;
+            document.getElementById('best-dish').value = '';
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const reviewModal = document.getElementById('review-modal');
+            const loginModal = document.getElementById('login-modal');
+            
+            if (event.target === reviewModal) {
+                reviewModal.style.display = 'none';
+            }
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        }
+
+        // Initialize with student view
+        showStudentView();
+
+        // Demo: Auto-populate some results for demonstration
+        setTimeout(() => {
+            displayResults(restaurants.slice(0, 3));
+        }, 1000);
+    </script>
+</body>
+</html>
