@@ -24,6 +24,10 @@
             padding: 0 20px;
         }
 
+        .hidden {
+            display: none !important;
+        }
+
         /* Header */
         header {
             background: rgba(255, 248, 240, 0.95);
@@ -325,6 +329,57 @@
             opacity: 0.9;
         }
 
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars span {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+
+        .rating-stars span:hover {
+            color: #ffd700;
+        }
+
+        .feedback-option {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #E55A2B;
+            background: transparent;
+            color: #E55A2B;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-option:hover {
+            background: rgba(229, 90, 43, 0.1);
+        }
+
+        .feedback-option.selected {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 90, 43, 0.3);
+        }
+
+        #written-review:focus {
+            outline: none;
+            border-color: #E55A2B;
+            box-shadow: 0 0 0 3px rgba(229, 90, 43, 0.1);
+        }
+
+        .word-count-warning {
+            color: #E55A2B !important;
+            font-weight: bold;
+        }
+
         /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.8);
@@ -334,28 +389,326 @@
             margin-top: 4rem;
         }
 
-        /* Responsive Design */
+        /* Rewards Section Styles */
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .reward-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(139, 47, 31, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(139, 47, 31, 0.15);
+            border-color: rgba(229, 90, 43, 0.3);
+        }
+
+        .reward-card.insufficient-points {
+            opacity: 0.6;
+            background: #f8f8f8;
+        }
+
+        .reward-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .reward-restaurant {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #8B2F1F;
+        }
+
+        .reward-points {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .reward-offer {
+            background: linear-gradient(135deg, #E55A2B, #D14A24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .reward-details {
+            color: #8B2F1F;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .reward-validity {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .reward-button {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reward-button.available {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+        }
+
+        .reward-button.available:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 90, 43, 0.3);
+        }
+
+        .reward-button.insufficient {
+            background: #ccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .reward-filter {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .reward-filter.active {
+            background: linear-gradient(45deg, #E55A2B, #D14A24);
+            color: white;
+        }
+
+        .reward-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4ecdc4;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .reward-badge.popular {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .reward-badge.limited {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .reward-badge.new {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        /* Mobile-First Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .container {
+                padding: 0 10px;
             }
-            
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .tagline {
+                font-size: 0.8rem;
+                margin-left: 5px;
+            }
+
+            .nav-buttons {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .search-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
             .search-form {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
-            
+
+            .form-group input, 
+            .form-group select {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+
             .restaurant-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 1rem;
             }
-            
-            .nav-buttons {
-                flex-direction: column;
-                gap: 0.5rem;
+
+            .restaurant-card {
+                margin: 0;
+            }
+
+            .restaurant-image {
+                height: 150px;
+                font-size: 2.5rem;
+            }
+
+            .restaurant-info {
+                padding: 1rem;
+            }
+
+            .restaurant-name {
+                font-size: 1.3rem;
+            }
+
+            .points-display {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .points-display h3 {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+                width: 95%;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .vendor-dashboard {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .rating-stars span {
+                font-size: 1.8rem;
+            }
+
+            /* Touch-friendly interactions */
+            .btn:active {
+                transform: scale(0.98);
+            }
+
+            .restaurant-card:active {
+                transform: translateY(-5px);
+            }
+
+            /* Better spacing for mobile */
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .restaurant-details {
+                font-size: 0.9rem;
+            }
+
+            .rating {
+                font-size: 0.9rem;
+            }
+
+            footer {
+                padding: 1.5rem 0;
+                font-size: 0.9rem;
             }
         }
 
-        .hidden {
-            display: none !important;
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 98%;
+            }
         }
     </style>
 </head>
@@ -368,8 +721,9 @@
             </div>
             <div class="nav-buttons">
                 <button class="btn btn-secondary" onclick="showStudentView()">Student</button>
+                <button class="btn btn-secondary" onclick="showRewardsView()">Rewards</button>
                 <button class="btn btn-primary" onclick="showLoginModal()">Login</button>
-                <button class="btn btn-" onclick="showVendorView()">Vendor</button>
+           
             </div>
         </nav>
     </header>
@@ -397,7 +751,7 @@
                             <option value="nit">NIT Karnataka</option>
                             <option value="rvce">RVCE</option>
                             <option value="pes">PES University</option>
-                            
+                            <option value="vit">VIT</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -424,7 +778,6 @@
                             <option value="indian-snacks">Indian Snacks</option>
                             <option value="deserts">Deserts</option>
                             <option value="biryani">Biryani</option>
-                            
                         </select>
                     </div>
                     <div class="form-group" style="display: flex; align-items: end;">
@@ -491,6 +844,101 @@
                 </div>
             </section>
         </div>
+
+        <!-- Restaurant Detail View -->
+        <div id="restaurant-detail-view" class="hidden">
+            <section class="search-section">
+                <!-- Back Button -->
+                <button class="btn btn-secondary" onclick="showStudentView()" style="margin-bottom: 1rem;">
+                    ← Back to Search
+                </button>
+
+                <!-- Restaurant Header -->
+                <div id="restaurant-header" style="text-align: center; margin-bottom: 2rem;">
+                    <!-- Restaurant details will be populated here -->
+                </div>
+
+                <!-- Restaurant Info Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    
+                    <!-- Menu Card -->
+                    <div style="background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(139, 47, 31, 0.1);">
+                        <h3 style="color: #8B2F1F; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            🍽️ Menu
+                        </h3>
+                        <div id="menu-items">
+                            <!-- Menu items will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Info Card -->
+                    <div style="background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(139, 47, 31, 0.1);">
+                        <h3 style="color: #8B2F1F; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            ℹ️ Quick Info
+                        </h3>
+                        <div id="quick-info">
+                            <!-- Quick info will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div style="background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(139, 47, 31, 0.1); margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="color: #8B2F1F; display: flex; align-items: center; gap: 0.5rem;">
+                            ⭐ Student Reviews
+                        </h3>
+                        <button class="btn btn-primary" onclick="showReviewModal(currentRestaurantDetail)" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            Write Review
+                        </button>
+                    </div>
+                    <div id="restaurant-reviews">
+                        <!-- Reviews will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="showReviewModal(currentRestaurantDetail)" style="display: flex; align-items: center; gap: 0.5rem;">
+                        📝 Write Review (+20 Points)
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareRestaurant()" style="display: flex; align-items: center; gap: 0.5rem;">
+                        🔗 Share with Friends
+                    </button>
+                    <button class="btn btn-secondary" onclick="getDirections()" style="display: flex; align-items: center; gap: 0.5rem;">
+                        🗺️ Get Directions
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Rewards Section -->
+        <div id="rewards-view" class="hidden">
+            <section class="search-section">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="color: #8B2F1F; margin-bottom: 0.5rem;">Reward Store</h2>
+                    <p style="color: #8B2F1F; opacity: 0.8;">Redeem your points for amazing discounts!</p>
+                </div>
+
+                <!-- Points Display -->
+                <div class="points-display" style="margin-bottom: 2rem;">
+                    <h3>Your Available Points: <span id="rewards-points">150</span></h3>
+                    <p>Earn more points by reviewing restaurants!</p>
+                </div>
+
+                <!-- Reward Categories -->
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <button class="btn btn-secondary reward-filter active" data-category="all">All Rewards</button>
+                    </div>
+                </div>
+
+                <!-- Rewards Grid -->
+                <div class="rewards-grid" id="rewards-grid">
+                    <!-- Rewards will be populated here -->
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Review Modal -->
@@ -502,13 +950,16 @@
             
             <form class="review-form" id="review-form">
                 <div class="form-group">
-                      <label for="datetime">The date and time you visited</label>
-                      <input type="date" required> <br>
-                      <input type="time" required> 
-                      <label for="Price">Total Bill(in rupees):</label>
-                      <input type="number" required>
-                    
-                    
+                    <label for="visit-date">Date you visited</label>
+                    <input type="date" id="visit-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="total-bill">Total Bill (₹)</label>
+                    <input type="number" id="total-bill" placeholder="e.g., 150" required>
+                </div>
+                
+                <div class="form-group">
                     <label>Overall Rating</label>
                     <div class="rating-stars" id="rating-stars">
                         <span onclick="setRating(1)">☆</span>
@@ -528,10 +979,34 @@
                         <option value="300+">₹300+</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label>Overall Experience</label>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                        <button type="button" class="feedback-option" data-feedback="excellent" onclick="selectFeedback('excellent', this)">Excellent</button>
+                        <button type="button" class="feedback-option" data-feedback="good" onclick="selectFeedback('good', this)">Good</button>
+                        <button type="button" class="feedback-option" data-feedback="mid" onclick="selectFeedback('mid', this)">Average</button>
+                        <button type="button" class="feedback-option" data-feedback="bad" onclick="selectFeedback('bad', this)">Bad</button>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="best-dish">Best Dish You Tried</label>
                     <input type="text" id="best-dish" placeholder="e.g., Chicken Biryani">
+                </div>
+
+                <div class="form-group">
+                    <label for="best-dish-price">Price of Best Dish (₹)</label>
+                    <input type="number" id="best-dish-price" placeholder="e.g., 120" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="written-review">Your Review (Max 20 words)</label>
+                    <textarea id="written-review" placeholder="Share your experience in a few words..." 
+                              maxlength="120" rows="3" style="resize: vertical; font-family: inherit; padding: 1rem; border: 2px solid #F5F1E8; border-radius: 10px; width: 100%; box-sizing: border-box; transition: all 0.3s ease;"></textarea>
+                    <div style="font-size: 0.8rem; color: #666; margin-top: 0.3rem; text-align: right;">
+                        <span id="word-count">0</span>/20 words
+                    </div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Submit Review (+20 Points)</button>
@@ -543,7 +1018,7 @@
     <div id="login-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
-                            <h2 style="margin-bottom: 1rem; color: #8B2F1F;">Login to BiteMap</h2>
+            <h2 style="margin-bottom: 1rem; color: #8B2F1F;">Login to BiteMap</h2>
             
             <form class="review-form">
                 <div class="form-group">
@@ -576,15 +1051,33 @@
         const restaurants = [
             {
                 id: 1,
-                name: "Spicy Junction",
+                name: "Bombay Dine",
                 cuisine: "indian",
                 budget: "50-100",
                 rating: 4.5,
                 reviews: 127,
-                location: "Near VIT Main Gate",
+                location: "Near MSRIT Gate",
                 bestDish: "Chicken Biryani",
-                college: "vit",
-                distance: "0.2 km"
+                college: "msrit",
+                distance: "0.3 km",
+                hours: "10:00 AM - 11:00 PM",
+                phone: "+91 9876543210",
+                description: "Authentic Indian cuisine with a modern twist. Popular among MSRIT students for affordable and delicious meals.",
+                menu: [
+                    { name: "Chicken Biryani", price: 120, category: "Main Course", popular: true, description: "Aromatic basmati rice cooked with tender chicken pieces and traditional spices" },
+                    { name: "Mutton Biryani", price: 150, category: "Main Course", description: "Rich and flavorful mutton biryani with perfectly cooked rice" },
+                    { name: "Veg Biryani", price: 80, category: "Main Course", description: "Mixed vegetable biryani with fragrant spices" },
+                    { name: "Chicken Curry", price: 100, category: "Main Course", description: "Spicy chicken curry served with rice or roti" },
+                    { name: "Dal Tadka", price: 60, category: "Main Course", description: "Yellow lentils tempered with cumin and spices" },
+                    { name: "Naan", price: 30, category: "Bread", description: "Soft and fluffy traditional Indian bread" },
+                    { name: "Masala Chai", price: 20, category: "Beverages", description: "Traditional Indian spiced tea" },
+                    { name: "Lassi", price: 40, category: "Beverages", description: "Refreshing yogurt-based drink" }
+                ],
+                studentReviews: [
+                    { name: "Hafil", rating: 5, review: "Best biryani near campus! The chicken pieces are so tender and the rice is perfectly cooked.", date: "2 days ago", verified: true },
+                    { name: "Zama", rating: 4, review: "Great value for money. The portion sizes are generous and taste is authentic.", date: "1 week ago", verified: true },
+                    { name: "Anfal", rating: 4, review: "Love their dal tadka! Perfect comfort food after long study sessions.", date: "2 weeks ago", verified: true }
+                ]
             },
             {
                 id: 2,
@@ -596,7 +1089,25 @@
                 location: "IISc Campus Road",
                 bestDish: "Margherita Pizza",
                 college: "iisc",
-                distance: "0.5 km"
+                distance: "0.5 km",
+                hours: "11:00 AM - 10:30 PM",
+                phone: "+91 9876543211",
+                description: "Authentic Italian cuisine with fresh ingredients. Perfect spot for pizza and pasta lovers.",
+                menu: [
+                    { name: "Margherita Pizza", price: 180, category: "Pizza", popular: true, description: "Classic pizza with fresh tomatoes, mozzarella, and basil" },
+                    { name: "Pepperoni Pizza", price: 220, category: "Pizza", description: "Spicy pepperoni with cheese on crispy crust" },
+                    { name: "Chicken Alfredo Pasta", price: 160, category: "Pasta", popular: true, description: "Creamy white sauce pasta with grilled chicken" },
+                    { name: "Penne Arrabbiata", price: 140, category: "Pasta", description: "Spicy tomato sauce pasta with herbs" },
+                    { name: "Caesar Salad", price: 120, category: "Salads", description: "Fresh lettuce with parmesan and croutons" },
+                    { name: "Garlic Bread", price: 80, category: "Starters", description: "Crispy bread with garlic butter and herbs" },
+                    { name: "Tiramisu", price: 100, category: "Desserts", description: "Classic Italian dessert with coffee and mascarpone" },
+                    { name: "Fresh Lime Soda", price: 50, category: "Beverages", description: "Refreshing lime soda with mint" }
+                ],
+                studentReviews: [
+                    { name: "Sneha R.", rating: 4, review: "Love their Margherita pizza! Thin crust and fresh toppings.", date: "3 days ago", verified: true },
+                    { name: "Karthik N.", rating: 5, review: "Best pasta place near IISc. The Alfredo is creamy and delicious!", date: "5 days ago", verified: true },
+                    { name: "Meera P.", rating: 4, review: "Good ambiance for study dates. Food quality is consistent.", date: "1 week ago", verified: true }
+                ]
             },
             {
                 id: 3,
@@ -608,7 +1119,25 @@
                 location: "RVCE Food Court",
                 bestDish: "Masala Dosa",
                 college: "rvce",
-                distance: "0.1 km"
+                distance: "0.1 km",
+                hours: "7:00 AM - 10:00 PM",
+                phone: "+91 9876543212",
+                description: "Traditional South Indian breakfast and meals. Famous for crispy dosas and filter coffee.",
+                menu: [
+                    { name: "Masala Dosa", price: 70, category: "Dosa", popular: true, description: "Crispy dosa with spiced potato filling" },
+                    { name: "Plain Dosa", price: 50, category: "Dosa", description: "Classic plain dosa served with chutney and sambar" },
+                    { name: "Rava Masala Dosa", price: 85, category: "Dosa", description: "Semolina dosa with potato masala" },
+                    { name: "Idli Sambar", price: 40, category: "Breakfast", popular: true, description: "Soft steamed rice cakes with sambar and chutney" },
+                    { name: "Vada Sambar", price: 45, category: "Breakfast", description: "Crispy lentil donuts with sambar" },
+                    { name: "South Indian Meals", price: 90, category: "Meals", description: "Complete meal with rice, sambar, rasam, and vegetables" },
+                    { name: "Filter Coffee", price: 25, category: "Beverages", popular: true, description: "Authentic South Indian filter coffee" },
+                    { name: "Buttermilk", price: 30, category: "Beverages", description: "Refreshing spiced buttermilk" }
+                ],
+                studentReviews: [
+                    { name: "Arjun K.", rating: 5, review: "Best dosa in the area! Crispy and served hot with amazing chutneys.", date: "1 day ago", verified: true },
+                    { name: "Kavya S.", rating: 5, review: "Perfect breakfast spot. Their filter coffee is absolutely divine!", date: "4 days ago", verified: true },
+                    { name: "Rohit B.", rating: 4, review: "Authentic taste and very affordable. Great for daily meals.", date: "1 week ago", verified: true }
+                ]
             },
             {
                 id: 4,
@@ -633,22 +1162,345 @@
                 bestDish: "Hakka Noodles",
                 college: "nit",
                 distance: "0.4 km"
+            },
+            {
+                id: 6,
+                name: "Biryani Express",
+                cuisine: "biryani",
+                budget: "100-200",
+                rating: 4.6,
+                reviews: 234,
+                location: "MSRIT Campus",
+                bestDish: "Mutton Biryani",
+                college: "msrit",
+                distance: "0.3 km"
             }
         ];
 
         let currentRating = 0;
         let userPoints = 150;
+        let currentRestaurant = null;
+        let currentRestaurantDetail = null;
+        let selectedFeedback = null;
+
+        // Sample rewards data
+        const rewards = [
+            {
+                id: 1,
+                restaurant: "Bombay Dine",
+                offer: "₹100 OFF",
+                minOrder: 300,
+                pointsCost: 200,
+                category: "food",
+                validity: "Valid for 7 days",
+                description: "Get ₹100 off on your order above ₹300. Valid on all menu items.",
+                badge: "popular"
+            },
+            {
+                id: 2,
+                restaurant: "Pasta Paradise",
+                offer: "₹50 OFF",
+                minOrder: 200,
+                pointsCost: 120,
+                category: "food",
+                validity: "Valid for 5 days",
+                description: "Enjoy ₹50 discount on orders above ₹200. Perfect for pizza lovers!",
+                badge: null
+            },
+            {
+                id: 3,
+                restaurant: "Dosa Delight",
+                offer: "₹75 OFF",
+                minOrder: 250,
+                pointsCost: 150,
+                category: "food",
+                validity: "Valid for 10 days",
+                description: "₹75 off on South Indian delicacies with minimum order of ₹250.",
+                badge: "new"
+            },
+            {
+                id: 4,
+                restaurant: "Amazon Pay",
+                offer: "₹200 Voucher",
+                minOrder: 0,
+                pointsCost: 400,
+                category: "voucher",
+                validity: "Valid for 30 days",
+                description: "Amazon Pay gift voucher worth ₹200. Use for any online purchases.",
+                badge: "limited"
+            },
+            {
+                id: 5,
+                restaurant: "Swiggy",
+                offer: "Free Delivery",
+                minOrder: 150,
+                pointsCost: 80,
+                category: "special",
+                validity: "Valid for 3 days",
+                description: "Get free delivery on your next 3 orders above ₹150.",
+                badge: "popular"
+            },
+            {
+                id: 6,
+                restaurant: "Burger Buzz",
+                offer: "₹60 OFF",
+                minOrder: 180,
+                pointsCost: 100,
+                category: "food",
+                validity: "Valid for 7 days",
+                description: "₹60 discount on burgers and fries combo above ₹180.",
+                badge: null
+            },
+            {
+                id: 7,
+                restaurant: "PhonePe",
+                offer: "₹100 Cashback",
+                minOrder: 500,
+                pointsCost: 250,
+                category: "voucher",
+                validity: "Valid for 15 days",
+                description: "Get ₹100 cashback on bill payments above ₹500.",
+                badge: "new"
+            },
+            {
+                id: 8,
+                restaurant: "Noodle House",
+                offer: "Buy 1 Get 1",
+                minOrder: 200,
+                pointsCost: 180,
+                category: "special",
+                validity: "Valid for 5 days",
+                description: "Buy 1 Get 1 offer on any noodles dish with minimum order ₹200.",
+                badge: "limited"
+            }
+        ];
+
+        let currentFilter = 'all';
 
         // View switching functions
         function showStudentView() {
             document.getElementById('student-view').classList.remove('hidden');
+            document.getElementById('rewards-view').classList.add('hidden');
             document.getElementById('vendor-view').classList.add('hidden');
+            document.getElementById('restaurant-detail-view').classList.add('hidden');
+        }
+
+        function showRewardsView() {
+            document.getElementById('student-view').classList.add('hidden');
+            document.getElementById('rewards-view').classList.remove('hidden');
+            document.getElementById('vendor-view').classList.add('hidden');
+            document.getElementById('restaurant-detail-view').classList.add('hidden');
+            
+            // Update points display in rewards view
+            document.getElementById('rewards-points').textContent = userPoints;
+            displayRewards();
         }
 
         function showVendorView() {
             document.getElementById('student-view').classList.add('hidden');
+            document.getElementById('rewards-view').classList.add('hidden');
             document.getElementById('vendor-view').classList.remove('hidden');
+            document.getElementById('restaurant-detail-view').classList.add('hidden');
         }
+
+        function showRestaurantDetail(restaurantId) {
+            const restaurant = restaurants.find(r => r.id === restaurantId);
+            if (!restaurant) return;
+
+            currentRestaurantDetail = restaurant;
+
+            document.getElementById('student-view').classList.add('hidden');
+            document.getElementById('rewards-view').classList.add('hidden');
+            document.getElementById('vendor-view').classList.add('hidden');
+            document.getElementById('restaurant-detail-view').classList.remove('hidden');
+
+            // Populate restaurant header
+            document.getElementById('restaurant-header').innerHTML = `
+                <div style="background: linear-gradient(45deg, #E55A2B, #D14A24); color: white; padding: 2rem; border-radius: 20px; margin-bottom: 1rem;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍽️</div>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">${restaurant.name}</h1>
+                    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1rem;">${restaurant.description || 'Great food, great prices, perfect for students!'}</p>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.5rem;">${'★'.repeat(Math.floor(restaurant.rating))}${'☆'.repeat(5-Math.floor(restaurant.rating))}</span>
+                            <span>${restaurant.rating} (${restaurant.reviews} reviews)</span>
+                        </div>
+                        <div>📍 ${restaurant.location}</div>
+                        <div>🚶‍♂️ ${restaurant.distance}</div>
+                    </div>
+                </div>
+            `;
+
+            // Populate menu
+            if (restaurant.menu) {
+                const menuByCategory = restaurant.menu.reduce((acc, item) => {
+                    if (!acc[item.category]) acc[item.category] = [];
+                    acc[item.category].push(item);
+                    return acc;
+                }, {});
+
+                document.getElementById('menu-items').innerHTML = Object.entries(menuByCategory).map(([category, items]) => `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #8B2F1F; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid #F5F1E8;">${category}</h4>
+                        ${items.map(item => `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                                        <span style="font-weight: 600; color: #8B2F1F;">${item.name}</span>
+                                        ${item.popular ? '<span style="background: #4ecdc4; color: white; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem;">POPULAR</span>' : ''}
+                                    </div>
+                                    ${item.description ? `<p style="font-size: 0.9rem; color: #666; margin: 0;">${item.description}</p>` : ''}
+                                </div>
+                                <div style="font-weight: bold; color: #E55A2B; margin-left: 1rem;">₹${item.price}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('menu-items').innerHTML = '<p style="color: #666;">Menu details coming soon!</p>';
+            }
+
+            // Populate quick info
+            document.getElementById('quick-info').innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🕒</span>
+                        <div>
+                            <div style="font-weight: 600; color: #8B2F1F;">Hours</div>
+                            <div style="color: #666;">${restaurant.hours || '10:00 AM - 10:00 PM'}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">📞</span>
+                        <div>
+                            <div style="font-weight: 600; color: #8B2F1F;">Contact</div>
+                            <div style="color: #666;">${restaurant.phone || '+91 9876543210'}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">💰</span>
+                        <div>
+                            <div style="font-weight: 600; color: #8B2F1F;">Budget Range</div>
+                            <div style="color: #666;">₹${restaurant.budget.replace('-', ' - ₹')}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🍽️</span>
+                        <div>
+                            <div style="font-weight: 600; color: #8B2F1F;">Best Dish</div>
+                            <div style="color: #666;">${restaurant.bestDish}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🏫</span>
+                        <div>
+                            <div style="font-weight: 600; color: #8B2F1F;">Nearby College</div>
+                            <div style="color: #666;">${restaurant.college.toUpperCase()}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Populate reviews
+            if (restaurant.studentReviews) {
+                document.getElementById('restaurant-reviews').innerHTML = restaurant.studentReviews.map(review => `
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-weight: 600; color: #8B2F1F;">${review.name}</span>
+                                ${review.verified ? '<span style="background: #4ecdc4; color: white; padding: 0.1rem 0.4rem; border-radius: 8px; font-size: 0.7rem;">VERIFIED</span>' : ''}
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #ffd700;">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span>
+                                <span style="font-size: 0.9rem; color: #666;">${review.date}</span>
+                            </div>
+                        </div>
+                        <p style="color: #666; margin: 0; line-height: 1.4;">${review.review}</p>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('restaurant-reviews').innerHTML = '<p style="color: #666; text-align: center; padding: 2rem;">No reviews yet. Be the first to review!</p>';
+            }
+        }
+
+        // Rewards functionality
+        function displayRewards() {
+            const grid = document.getElementById('rewards-grid');
+            
+            let filteredRewards = rewards;
+            if (currentFilter !== 'all') {
+                filteredRewards = rewards.filter(reward => reward.category === currentFilter);
+            }
+            
+            grid.innerHTML = filteredRewards.map(reward => {
+                const canAfford = userPoints >= reward.pointsCost;
+                const badgeHtml = reward.badge ? `<div class="reward-badge ${reward.badge}">${reward.badge.toUpperCase()}</div>` : '';
+                
+                return `
+                    <div class="reward-card ${!canAfford ? 'insufficient-points' : ''}">
+                        ${badgeHtml}
+                        <div class="reward-header">
+                            <div class="reward-restaurant">${reward.restaurant}</div>
+                            <div class="reward-points">${reward.pointsCost} pts</div>
+                        </div>
+                        <div class="reward-offer">${reward.offer}</div>
+                        <div class="reward-details">
+                            ${reward.description}
+                            ${reward.minOrder > 0 ? `<br><strong>Min. order: ₹${reward.minOrder}</strong>` : ''}
+                        </div>
+                        <div class="reward-validity">${reward.validity}</div>
+                        <button class="reward-button ${canAfford ? 'available' : 'insufficient'}" 
+                                onclick="${canAfford ? `redeemReward(${reward.id})` : 'showInsufficientPoints()'}">
+                            ${canAfford ? 'Redeem Now' : `Need ${reward.pointsCost - userPoints} more points`}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function redeemReward(rewardId) {
+            const reward = rewards.find(r => r.id === rewardId);
+            
+            if (userPoints >= reward.pointsCost) {
+                if (confirm(`Redeem ${reward.offer} from ${reward.restaurant} for ${reward.pointsCost} points?`)) {
+                    userPoints -= reward.pointsCost;
+                    document.getElementById('user-points').textContent = userPoints;
+                    document.getElementById('rewards-points').textContent = userPoints;
+                    
+                    alert(`🎉 Congratulations! You've redeemed ${reward.offer} from ${reward.restaurant}!\n\nVoucher code: BITE${Math.random().toString(36).substr(2, 8).toUpperCase()}\n\n${reward.validity}\nShow this message at the restaurant to claim your discount.`);
+                    
+                    displayRewards(); // Refresh the rewards display
+                }
+            }
+        }
+
+        function showInsufficientPoints() {
+            alert('You don\'t have enough points for this reward. Keep reviewing restaurants to earn more points!');
+        }
+
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for filter buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('reward-filter')) {
+                    // Remove active class from all filters
+                    document.querySelectorAll('.reward-filter').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked filter
+                    e.target.classList.add('active');
+                    
+                    // Update current filter
+                    currentFilter = e.target.getAttribute('data-category');
+                    
+                    // Refresh rewards display
+                    if (!document.getElementById('rewards-view').classList.contains('hidden')) {
+                        displayRewards();
+                    }
+                }
+            });
+        });
 
         function scrollToSearch() {
             document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
@@ -703,7 +1555,7 @@
             
             grid.innerHTML = restaurants.map(restaurant => `
                 <div class="restaurant-card">
-                    <div class="restaurant-image">🍽️</div>
+                    <div class="restaurant-image">🍽</div>
                     <div class="restaurant-info">
                         <div class="restaurant-name">${restaurant.name}</div>
                         <div class="restaurant-details">
@@ -714,8 +1566,8 @@
                             <span>${restaurant.rating} (${restaurant.reviews} reviews)</span>
                         </div>
                         <div class="best-dish">Best: ${restaurant.bestDish}</div>
-                        <button class="btn btn-primary" onclick="visitRestaurant(${restaurant.id})">
-                            Visit & Review
+                        <button class="btn btn-primary" onclick="showRestaurantDetail(${restaurant.id})">
+                            View Details
                         </button>
                     </div>
                 </div>
@@ -730,6 +1582,32 @@
             setTimeout(() => {
                 showReviewModal(restaurant);
             }, 1000);
+        }
+
+        function shareRestaurant() {
+            if (navigator.share && currentRestaurantDetail) {
+                navigator.share({
+                    title: `${currentRestaurantDetail.name} - BiteMap`,
+                    text: `Check out ${currentRestaurantDetail.name} on BiteMap! ${currentRestaurantDetail.description}`,
+                    url: window.location.href
+                });
+            } else if (currentRestaurantDetail) {
+                // Fallback for browsers that don't support Web Share API
+                const text = `Check out ${currentRestaurantDetail.name} on BiteMap! ${currentRestaurantDetail.description} - ${window.location.href}`;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text);
+                    alert('Restaurant link copied to clipboard!');
+                } else {
+                    alert(`Share this restaurant: ${text}`);
+                }
+            }
+        }
+
+        function getDirections() {
+            if (currentRestaurantDetail) {
+                // In a real app, this would open maps with directions
+                alert(`Opening directions to ${currentRestaurantDetail.name} at ${currentRestaurantDetail.location}...\n\nNote: In a real app, this would integrate with Google Maps or other navigation services.`);
+            }
         }
 
         function showReviewModal(restaurant) {
@@ -764,6 +1642,163 @@
             });
         }
 
+        // Feedback selection functionality
+        function selectFeedback(feedback, button) {
+            selectedFeedback = feedback;
+            
+            // Remove selected class from all feedback options
+            document.querySelectorAll('.feedback-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked button
+            button.classList.add('selected');
+        }
+
+        // Word count functionality for written review
+        function updateWordCount() {
+            const textarea = document.getElementById('written-review');
+            const wordCountSpan = document.getElementById('word-count');
+            const text = textarea.value.trim();
+            const words = text === '' ? 0 : text.split(/\s+/).length;
+            
+            wordCountSpan.textContent = words;
+            
+            if (words > 20) {
+                wordCountSpan.classList.add('word-count-warning');
+                // Trim to 20 words
+                const wordsArray = text.split(/\s+/);
+                const trimmedText = wordsArray.slice(0, 20).join(' ');
+                textarea.value = trimmedText;
+                wordCountSpan.textContent = '20';
+            } else {
+                wordCountSpan.classList.remove('word-count-warning');
+            }
+        }
+
+        // Add event listener for word count when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewTextarea = document.getElementById('written-review');
+            if (reviewTextarea) {
+                reviewTextarea.addEventListener('input', updateWordCount);
+            }
+
+            // Add event listener for review form submission
+            const reviewForm = document.getElementById('review-form');
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', handleReviewSubmission);
+            }
+        });
+
+        // Handle review form submission
+        function handleReviewSubmission(e) {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Please provide a rating');
+                return;
+            }
+
+            if (!selectedFeedback) {
+                alert('Please select your overall experience');
+                return;
+            }
+            
+            const visitDate = document.getElementById('visit-date').value;
+            const totalBill = document.getElementById('total-bill').value;
+            const priceRange = document.getElementById('price-range').value;
+            const bestDish = document.getElementById('best-dish').value;
+            const bestDishPrice = document.getElementById('best-dish-price').value;
+            const writtenReview = document.getElementById('written-review').value.trim();
+            
+            if (!visitDate || !totalBill || !bestDish || !bestDishPrice) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Validate written review word count
+            const words = writtenReview === '' ? 0 : writtenReview.split(/\s+/).length;
+            if (words > 20) {
+                alert('Please keep your written review within 20 words');
+                return;
+            }
+            
+            // Create new review object
+            const newReview = {
+                name: "You", // In real app, this would be the logged-in user's name
+                rating: currentRating,
+                review: writtenReview || `Great ${selectedFeedback} experience! Best dish: ${bestDish} (₹${bestDishPrice}). Total bill: ₹${totalBill}`,
+                date: "Just now",
+                verified: true,
+                feedback: selectedFeedback,
+                bestDish: bestDish,
+                bestDishPrice: bestDishPrice,
+                totalBill: totalBill,
+                visitDate: visitDate
+            };
+            
+            // Add review to the current restaurant
+            if (currentRestaurant && currentRestaurant.studentReviews) {
+                // Add to beginning of reviews array
+                currentRestaurant.studentReviews.unshift(newReview);
+            } else if (currentRestaurant) {
+                // Create reviews array if it doesn't exist
+                currentRestaurant.studentReviews = [newReview];
+            }
+            
+            // Update the restaurant in the main restaurants array
+            const restaurantIndex = restaurants.findIndex(r => r.id === currentRestaurant.id);
+            if (restaurantIndex !== -1) {
+                restaurants[restaurantIndex] = currentRestaurant;
+                // Update review count and rating
+                restaurants[restaurantIndex].reviews += 1;
+            }
+            
+            // Add points
+            userPoints += 20;
+            document.getElementById('user-points').textContent = userPoints;
+            document.getElementById('rewards-points').textContent = userPoints;
+            
+            // Close modal first
+            closeReviewModal();
+            
+            // Show success message
+            alert('🎉 Review submitted successfully!\n\nYou earned 20 points! 💰\n\nYour review has been added to the restaurant page.');
+            
+            // Refresh the restaurant detail view if we're on it
+            if (currentRestaurantDetail && currentRestaurantDetail.id === currentRestaurant.id) {
+                // Update the current restaurant detail
+                currentRestaurantDetail = currentRestaurant;
+                // Refresh the reviews section
+                refreshRestaurantReviews();
+            }
+            
+            // Reset form
+            resetReviewForm();
+        }
+
+        // Function to reset review form
+        function resetReviewForm() {
+            currentRating = 0;
+            selectedFeedback = null;
+            setRating(0);
+            document.querySelectorAll('.feedback-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            const wordCountEl = document.getElementById('word-count');
+            if (wordCountEl) {
+                wordCountEl.textContent = '0';
+            }
+            const writtenReviewEl = document.getElementById('written-review');
+            if (writtenReviewEl) {
+                writtenReviewEl.value = '';
+            }
+            const reviewForm = document.getElementById('review-form');
+            if (reviewForm) {
+                reviewForm.reset();
+            }
+        }
+
         // Review form submission
         document.getElementById('review-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -772,28 +1807,115 @@
                 alert('Please provide a rating');
                 return;
             }
+
+            if (!selectedFeedback) {
+                alert('Please select your overall experience');
+                return;
+            }
             
+            const visitDate = document.getElementById('visit-date').value;
+            const totalBill = document.getElementById('total-bill').value;
             const priceRange = document.getElementById('price-range').value;
             const bestDish = document.getElementById('best-dish').value;
+            const bestDishPrice = document.getElementById('best-dish-price').value;
+            const writtenReview = document.getElementById('written-review').value.trim();
             
-            if (!bestDish) {
-                alert('Please mention the best dish you tried');
+            if (!visitDate || !totalBill || !bestDish || !bestDishPrice) {
+                alert('Please fill in all required fields');
                 return;
+            }
+
+            // Validate written review word count
+            const words = writtenReview === '' ? 0 : writtenReview.split(/\s+/).length;
+            if (words > 20) {
+                alert('Please keep your written review within 20 words');
+                return;
+            }
+            
+            // Create new review object
+            const newReview = {
+                name: "You", // In real app, this would be the logged-in user's name
+                rating: currentRating,
+                review: writtenReview || `Great ${selectedFeedback} experience! Best dish: ${bestDish} (₹${bestDishPrice}). Total bill: ₹${totalBill}`,
+                date: "Just now",
+                verified: true,
+                feedback: selectedFeedback,
+                bestDish: bestDish,
+                bestDishPrice: bestDishPrice,
+                totalBill: totalBill,
+                visitDate: visitDate
+            };
+            
+            // Add review to the current restaurant
+            if (currentRestaurant && currentRestaurant.studentReviews) {
+                // Add to beginning of reviews array
+                currentRestaurant.studentReviews.unshift(newReview);
+            } else if (currentRestaurant) {
+                // Create reviews array if it doesn't exist
+                currentRestaurant.studentReviews = [newReview];
+            }
+            
+            // Update the restaurant in the main restaurants array
+            const restaurantIndex = restaurants.findIndex(r => r.id === currentRestaurant.id);
+            if (restaurantIndex !== -1) {
+                restaurants[restaurantIndex] = currentRestaurant;
+                // Update review count and rating
+                restaurants[restaurantIndex].reviews += 1;
             }
             
             // Add points
             userPoints += 20;
             document.getElementById('user-points').textContent = userPoints;
+            document.getElementById('rewards-points').textContent = userPoints;
             
-            alert('Review submitted successfully! You earned 20 points! 🎉');
+            // Close modal
             closeReviewModal();
+            
+            // Show success message
+            alert('Review submitted successfully! You earned 20 points! 🎉');
+            
+            // Refresh the restaurant detail view if we're on it
+            if (currentRestaurantDetail && currentRestaurantDetail.id === currentRestaurant.id) {
+                // Update the current restaurant detail
+                currentRestaurantDetail = currentRestaurant;
+                // Refresh the reviews section
+                refreshRestaurantReviews();
+            }
             
             // Reset form
             currentRating = 0;
+            selectedFeedback = null;
             setRating(0);
-            document.getElementById('price-range').selectedIndex = 0;
-            document.getElementById('best-dish').value = '';
+            document.querySelectorAll('.feedback-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.getElementById('word-count').textContent = '0';
+            document.getElementById('written-review').value = '';
+            document.getElementById('review-form').reset();
         });
+
+        // Function to refresh restaurant reviews display
+        function refreshRestaurantReviews() {
+            if (currentRestaurantDetail && currentRestaurantDetail.studentReviews) {
+                document.getElementById('restaurant-reviews').innerHTML = currentRestaurantDetail.studentReviews.map(review => `
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-weight: 600; color: #8B2F1F;">${review.name}</span>
+                                ${review.verified ? '<span style="background: #4ecdc4; color: white; padding: 0.1rem 0.4rem; border-radius: 8px; font-size: 0.7rem;">VERIFIED</span>' : ''}
+                                ${review.name === "You" ? '<span style="background: #E55A2B; color: white; padding: 0.1rem 0.4rem; border-radius: 8px; font-size: 0.7rem;">YOUR REVIEW</span>' : ''}
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #ffd700;">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span>
+                                <span style="font-size: 0.9rem; color: #666;">${review.date}</span>
+                            </div>
+                        </div>
+                        <p style="color: #666; margin: 0; line-height: 1.4;">${review.review}</p>
+                        ${review.bestDish && review.bestDishPrice ? `<p style="font-size: 0.8rem; color: #E55A2B; margin: 0.5rem 0 0 0; font-weight: 500;">Best Dish: ${review.bestDish} - ₹${review.bestDishPrice}</p>` : ''}
+                    </div>
+                `).join('');
+            }
+        }
 
         // Close modals when clicking outside
         window.onclick = function(event) {
